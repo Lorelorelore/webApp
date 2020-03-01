@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import psycopg2
 from flask_bcrypt import Bcrypt
 from psycopg2.extras import RealDictCursor
