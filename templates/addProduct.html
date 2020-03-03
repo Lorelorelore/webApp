@@ -45,10 +45,10 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    <a href="login.html" class="login-panel"><i class="fa fa-user"></i>Login</a>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
+                            <option value='yt' data-image="{{ url_for('static', filename='img/flag-1.jpg')}}" data-imagecss="flag yt"
                                 data-title="English">English</option>
                             
                         </select>
@@ -68,23 +68,29 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
                             <a href="./index.html">
-                                <img src="{{ url_for('static', filename='img/logo.png)}}" alt="">
+                                <img src="{{ url_for('static', filename='img/logo.png')}}" alt="">
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
-                            <form action="#" class="input-group">
+                                <select class="category-btn" id="inputGroupSelect04">
+                                  <option selected>Choose...</option>
+                                  <option value="1">One</option>
+                                  <option value="2">Two</option>
+                                  <option value="3">Three</option>
+                                </select>
+                            <div class="input-group">
                                 <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
-                            </form>
+                                <button type="submit"><i class="ti-search"></i></button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
                             
-                            <li class="cart-icon"><a href="#">
+                            <li class="cart-icon">
+                                <a href="#">
                                     <i class="icon_bag_alt"></i>
                                     <span>3</span>
                                 </a>
@@ -93,7 +99,7 @@
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td class="si-pic"><img src="{{ url_for('static', filename='img/select-product-1.jpg)}}" alt=""></td>
+                                                    <td class="si-pic"><img src="{{ url_for('static', filename='img/select-product-1.jpg')}}" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
                                                             <p>$60.00 x 1</p>
@@ -139,20 +145,13 @@
                     <ul>
                         <li><a href="./index.html">Home</a></li>
                         <li><a href="./shop.html">Shop</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Men's</a></li>
-                                <li><a href="#">Women's</a></li>
-                                <li><a href="#">Kid's</a></li>
-                            </ul>
-                        </li>
-                        
-                        <li><a href="./check-out.html">Contact</a></li>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="./contact.html">Contact</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
-                               
+                                
                                 <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
+                                <li><a href="./checkout.html">Checkout</a></li>
                                 <li><a href="./register.html">Register</a></li>
                                 <li><a href="./login.html">Login</a></li>
                             </ul>
@@ -175,47 +174,47 @@
                             <h2>Add Product</h2>
                         </div>
                         <div class="register-form">
-                            <form action="/submit" method="POST">
+                            <form action="/sell" method="POST" enctype="multipart/form-data">
                                 <div class="group-input">
-                                    <label for="fname">First Name *</label>
-                                    <input type="text" id="fname" name="fname" required>
+                                    <label for="prodName">Product Name *</label>
+                                    <input type="text" id="prodName" name="prodName" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="lname">Last Name *</label>
-                                    <input type="text" id="lname" name="lname" required>
+                                    <label for="description">Description *</label>
+                                    <textarea name = "description" type = "text"  row = "50" col = "50" maxlength = "255" style="resize: none;width: 100%;border-color: #ebebeb;"></textarea>
                                 </div>
                                 <div class="group-input">
-                                    <label for="gender">Gender *</label>
-                                    <select name = "gender" id="gender" required>
+                                    <label for="price">Price *</label>
+                                    <input type="number" id="price" name="price" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="sku">SKU (Stock Keeping Unit) *</label>
+                                    <input type="text" id="sku" name="sku" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="stock">Stock *</label>
+                                    <input type="number" id="stock" name="stock" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="variation">Variation *</label>
+                                    <input type="text" id="variation" name="variation" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="brand">Brand *</label>
+                                    <input type="text" id="brand" name="brand" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="category">Category *</label>
+                                    <select name = "category" id="category" required>
                   
-                                        <option value = 0>Male</option>
-                                        <option value = 1>Female</option>
+                                        <option value = 1>Men's Wear</option>
+                                        <option value = 2>Women's Wear</option>
                                         
-                                      </select> 
-                                </div>
-                                <div class="group-input">
-                                    <label for="bday">Birthday *</label>
-                                    <input type="date" id="bday" name="bday" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="email">Email Address *</label>
-                                    <input type="email" id="email" name="email" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="uname">Username *</label>
-                                    <input type="text" id="uname" name="uname" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="contact">Contact *</label>
-                                    <input type="text" id="contact" name="contact" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="password">Password *</label>
-                                    <input type="password" id="pass" name="password" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="cpass">Confirm Password *</label>
-                                    <input type="password" id="cpass" name="cpass" required>
+                                      </select>
+
+                                      <input class = "upload" type="file" name="pImage" id="uploadfile">	
+
+                                      	
                                 </div>
                                 <button type="submit" class="site-btn register-btn">REGISTER</button>
                             </form>
@@ -235,7 +234,7 @@
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
-                            <a href="#"><img src="{{ url_for('static', filename='img/footer-logo.png)}}" alt=""></a>
+                            <a href="#"><img src="{{ url_for('static', filename='img/footer-logo.png')}}" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>

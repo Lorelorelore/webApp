@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, session
 import psycopg2
+import os
 from flask_bcrypt import Bcrypt
 from psycopg2.extras import RealDictCursor
+from werkzeug.utils import secure_filename
 
 con = psycopg2.connect(
   host = "localhost",
@@ -13,6 +15,15 @@ con = psycopg2.connect(
 bcrypt = Bcrypt()
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = 'C:/Users/peysi/Desktop/webApp/static/img'
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/")
 def index():
@@ -29,6 +40,38 @@ def register():
 @app.route("/addProduct.html")
 def addProduct():
   return render_template('addProduct.html')
+
+@app.route("/sell", methods = ["GET","POST"])
+def sell():
+
+  if request.method == "POST":
+    prodName = request.form['prodName']
+    description = request.form['description']
+    price = request.form['price']
+    sku = request.form['sku']
+    stock = request.form['stock']
+    variation = request.form['variation']
+    brand = request.form['brand']
+    category = request.form['category']
+    image = request.files['pImage']
+    if allowed_file(image.filename):
+      filename = secure_filename(image.filename)
+      image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    else:
+      return "<script>alert('Invalid file extension!');window.location.href='addProduct.html';</script>"
+    url = UPLOAD_FOLDER + "/" + image.filename
+    cur = con.cursor()
+    cur.execute("INSERT INTO products (name,description,price,sku,stock,variation,brand,category_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(prodName,description,price,sku,stock,variation,
+    brand,category))
+    con.commit()
+
+    cur.execute("SELECT  currval(pg_get_serial_sequence('products','product_id'))")
+    id = cur.fetchone()
+
+    cur.execute("Insert INTO product_images (product_id,image_name) VALUES (%s,%s)",(id,url))
+    con.commit()
+    cur.close()
+    return "<script>alert('Product now Available!');window.location.href='index.html';</script>"
 
 @app.route("/submit", methods = ["GET","POST"])
 def submit():
@@ -109,6 +152,11 @@ def login():
 
 @app.route("/shop.html")
 def shop():
+  cur = con.cursor(cursor_factory=RealDictCursor)
+  cur.execute("SELECT * FROM products")
+  products = cur.fetchall()
+  cur.execute("SELECT * FROM product_images")
+  pImages = cur.fetchall()
   return render_template('shop.html')
 
 @app.route("/shopping-cart.html")
