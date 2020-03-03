@@ -26,6 +26,10 @@ def mainP():
 def register():
   return render_template('register.html')
 
+@app.route("/addProduct.html")
+def addProduct():
+  return render_template('addProduct.html')
+
 @app.route("/submit", methods = ["GET","POST"])
 def submit():
 
