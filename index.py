@@ -21,6 +21,7 @@ UPLOAD_FOLDER = 'C:/Users/peysi/Desktop/webApp/static/img'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.secret_key = "testing123"
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -113,7 +114,7 @@ def verify():
     cur.execute("SELECT username,password FROM customers WHERE username = %s AND password = %s", (username,password))
     row = cur.fetchall()
     if len(row) == 1:
-      #session['username'] = username
+      session['username'] = username
       cur.close()
       return "<script>alert('Login Successfully');window.location.href='index.html';</script>"
     else:
@@ -145,6 +146,10 @@ def verify():
           alert = "Invalid Username"
           return render_template('login.html', alert = alert) 
   '''
+@app.route("/logout")
+def logout():
+  session.pop("username",None)
+  return "<script>alert('User has been logged out');window.location.href='index.html';</script>" 
 
 @app.route("/login.html")
 def login():
@@ -155,7 +160,7 @@ def shop():
   cur = con.cursor(cursor_factory=RealDictCursor)
   cur.execute("SELECT * FROM products")
   products = cur.fetchall()
-  cur.execute("SELECT * FROM product_images")
+  cur.execute("SELECT * FROM product_images WHERE product_id = (SELECT product_id)")
   pImages = cur.fetchall()
   return render_template('shop.html')
 
@@ -166,6 +171,10 @@ def shopingCart():
 @app.route("/account.html")
 def account():
   return render_template('account.html')
+
+@app.route("/myaccount.html")
+def myaccount():
+  return render_template('myaccount.html')
 
 @app.route("/checkout.html")
 def checkout():
