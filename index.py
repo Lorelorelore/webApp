@@ -160,9 +160,8 @@ def shop():
   cur = con.cursor(cursor_factory=RealDictCursor)
   cur.execute("SELECT * FROM products")
   products = cur.fetchall()
-  cur.execute("SELECT * FROM product_images WHERE product_id = (SELECT product_id)")
-  pImages = cur.fetchall()
-  return render_template('shop.html')
+  cur.execute = ("SELECT * FROM product_images")
+  return render_template('shop.html',products = products)
 
 @app.route("/shopping-cart.html")
 def shopingCart():
