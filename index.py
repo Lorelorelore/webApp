@@ -158,9 +158,8 @@ def login():
 @app.route("/shop.html")
 def shop():
   cur = con.cursor(cursor_factory=RealDictCursor)
-  cur.execute("SELECT * FROM products")
+  cur.execute("SELECT * FROM Products INNER JOIN product_images on products.product_id = product_images.product_id")
   products = cur.fetchall()
-  cur.execute = ("SELECT * FROM product_images")
   return render_template('shop.html',products = products)
 
 @app.route("/shopping-cart.html")
