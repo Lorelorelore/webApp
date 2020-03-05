@@ -162,6 +162,16 @@ def shop():
   products = cur.fetchall()
   return render_template('shop.html',products = products)
 
+@app.route("/product.html<product_id>")
+def product(product_id):
+  cur = con.cursor(cursor_factory=RealDictCursor)
+  cur.execute("Select *  from products inner join product_images on products.product_id = product_images.product_id WHERE products.product_id = %s",(product_id))
+  product = cur.fetchall()
+  cur.close()
+
+
+  return render_template('product.html',products = product)
+
 @app.route("/shopping-cart.html")
 def shopingCart():
   return render_template('shopping-cart.html')
