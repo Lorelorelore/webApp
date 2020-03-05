@@ -30,15 +30,15 @@ def allowed_file(filename):
 def index():
   return render_template('index.html')
 
-@app.route("/index.html")
+@app.route("/index")
 def mainP():
   return render_template('index.html')
 
-@app.route("/register.html")
+@app.route("/register")
 def register():
   return render_template('register.html')
 
-@app.route("/addProduct.html")
+@app.route("/addProduct")
 def addProduct():
   return render_template('addProduct.html')
 
@@ -151,11 +151,11 @@ def logout():
   session.pop("username",None)
   return "<script>alert('User has been logged out');window.location.href='index.html';</script>" 
 
-@app.route("/login.html")
+@app.route("/login")
 def login():
   return render_template('login.html')
 
-@app.route("/shop.html")
+@app.route("/shop")
 def shop():
   cur = con.cursor(cursor_factory=RealDictCursor)
   cur.execute("SELECT * FROM Products INNER JOIN product_images on products.product_id = product_images.product_id")
@@ -170,25 +170,26 @@ def product(product_id):
   cur.close()
   return render_template('product.html',products = product)
 
-@app.route("/shopping-cart.html")
+@app.route("/shopping-cart")
 def shopingCart():
   return render_template('shopping-cart.html')
 
-@app.route("/account.html")
+@app.route("/account")
 def account():
   return render_template('account.html')
 
-@app.route("/myaccount.html")
+@app.route("/myaccount")
 def myaccount():
   return render_template('myaccount.html')
 
-@app.route("/checkout.html")
+@app.route("/checkout")
 def checkout():
   return render_template('checkout.html')
 
-@app.route("/contact.html")
+@app.route("/contact")
 def contact():
   return render_template('contact.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
