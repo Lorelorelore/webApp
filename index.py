@@ -199,6 +199,15 @@ def checkout():
 def contact():
   return render_template('contact.html')
 
+@app.route('/search', methods=['POST'])
+def search():
+    category = request.form['category']
+    search = request.form['search']
+    cur = con.cursor(cursor_factory=RealDictCursor)
+    cur.execute("Select *  from products inner join product_images on products.product_id = product_images.product_id WHERE products.category_id = %s OR products.name = %s",(category,search))
+    products = cur.fetchall()
+    return render_template('shop.html', products=products, category=category)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

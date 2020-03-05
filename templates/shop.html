@@ -212,6 +212,11 @@
                                 </div>
                             </div>
                             {% endfor %}
+                            {% if customers | count < 1 %}
+                                <tr>
+                                <td colspan="8"><i>No results found for {{keyword}}</i></td>
+                                <tr>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
