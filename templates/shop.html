@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Fashi | Template</title>
+        <title>AmaPeeGood</title>
     
         <!-- Google Font -->
         <link href="{{ url_for('static', filename='css/googleFont.css')}}" rel="stylesheet">
@@ -202,7 +202,7 @@
                                         <img src="{{url_for('static',filename=''){{product['image_name']}}}}" alt="">
                                     </div>
                                     <div class="pi-text">
-                                        <a href="#">
+                                        <a href="/product/{{product['product_id']}}">
                                             <h5>{{product['name']}}</h5>
                                         </a>
                                         <div class="product-price">

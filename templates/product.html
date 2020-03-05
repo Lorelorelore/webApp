@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Fashi | Template</title>
+        <title>AmaPeeGood</title>
     
         <!-- Google Font -->
         <link href="{{ url_for('static', filename='css/googleFont.css')}}" rel="stylesheet">
@@ -191,7 +191,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="product-pic-zoom">
-                            <img class="product-big-img" src="img/product-single/product-1.jpg" alt="">
+                            <img class="product-big-img" src="{{ url_for('static', filename=''){{product['image_name']}}}}" alt="">
                             <div class="zoom-icon">
                                 <i class="fa fa-search-plus"></i>
                             </div>
@@ -199,7 +199,7 @@
                         <div class="product-thumbs">
                             <div class="product-thumbs-track ps-slider owl-carousel">
                                 <div class="pt active" data-imgbigurl="img/product-single/product-1.jpg"><img
-                                        src="img/product-single/product-1.jpg" alt=""></div>
+                                        src="{{ url_for('static', filename=''){{product['image_name']}}}}" alt=""></div>
                                 
                                 
                             </div>
@@ -208,15 +208,14 @@
                     <div class="col-lg-6">
                         <div class="product-details">
                             <div class="pd-title">
-                                <span>oranges</span>
-                                <h3>Pure Pineapple</h3>
+                                <h3>{{product['name']}}</h3>
 
                             </div>
                             
                             <div class="pd-desc">
                                 <p>Lorem ipsum dolor sit amet, consectetur ing elit, sed do eiusmod tempor sum dolor
                                     sit amet, consectetur adipisicing elit, sed do mod tempor</p>
-                                <h4>$495.00 </h4>
+                                <h4>{{product['price']}} </h4>
                             </div>
                             <div class="pd-color">
                                 <h6>Color</h6>
@@ -264,7 +263,7 @@
                                 <li><span>TAGS</span>: Clothing, T-shirt, Woman</li>
                             </ul>
                             <div class="pd-share">
-                                <div class="p-code">Sku : 00012</div>
+                                <div class="p-code">{{product['sku']}}</div>
                                 <div class="pd-social">
                                     <a href="#"><i class="ti-facebook"></i></a>
                                     <a href="#"><i class="ti-twitter-alt"></i></a>
