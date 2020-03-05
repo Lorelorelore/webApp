@@ -40,7 +40,10 @@ def register():
 
 @app.route("/addProduct")
 def addProduct():
-  return render_template('addProduct.html')
+  if "username" in session:
+    return render_template('addProduct.html')
+  else:
+    return "<script>alert('Log-In First');window.location.href='/login';</script>"
 
 @app.route("/sell", methods = ["GET","POST"])
 def sell():
@@ -59,7 +62,7 @@ def sell():
       filename = secure_filename(image.filename)
       image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     else:
-      return "<script>alert('Invalid file extension!');window.location.href='addProduct.html';</script>"
+      return "<script>alert('Invalid file extension!');window.location.href='/addProduct';</script>"
     url = "img/" + image.filename
     cur = con.cursor()
     cur.execute("INSERT INTO products (name,description,price,sku,stock,variation,brand,category_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(prodName,description,price,sku,stock,variation,
@@ -72,7 +75,7 @@ def sell():
     cur.execute("Insert INTO product_images (product_id,image_name) VALUES (%s,%s)",(id,url))
     con.commit()
     cur.close()
-    return "<script>alert('Product now Available!');window.location.href='index.html';</script>"
+    return "<script>alert('Product now Available!');window.location.href='/index';</script>"
 
 @app.route("/submit", methods = ["GET","POST"])
 def submit():
@@ -97,11 +100,11 @@ def submit():
         email,uname,password, contact))
         con.commit()
         cur.close()
-        return "<script>alert('Registered Successfully!');window.location.href='index.html';</script>"
+        return "<script>alert('Registered Successfully!');window.location.href='/index';</script>"
       else:
-        return "<script>alert('Password and Confrim Password Doesnt match');window.location.href='register.html';</script>"
+        return "<script>alert('Password and Confrim Password Doesnt match');window.location.href='/register';</script>"
     else:
-      return "<script>alert('Username and Email Already Taken');window.location.href='register.html';</script>"
+      return "<script>alert('Username and Email Already Taken');window.location.href='/register';</script>"
 
 @app.route("/verify", methods = ["GET","POST"])
 def verify():
@@ -116,9 +119,9 @@ def verify():
     if len(row) == 1:
       session['username'] = username
       cur.close()
-      return "<script>alert('Login Successfully');window.location.href='index.html';</script>"
+      return "<script>alert('Login Successfully');window.location.href='/index';</script>"
     else:
-      return "<script>alert('Wrong Username or Password');window.location.href='login.html';</script>"
+      return "<script>alert('Wrong Username or Password');window.location.href='/login';</script>"
 
 
 
@@ -164,11 +167,14 @@ def shop():
 
 @app.route("/product/<product_id>")
 def product(product_id):
-  cur = con.cursor(cursor_factory=RealDictCursor)
-  cur.execute("Select *  from products inner join product_images on products.product_id = product_images.product_id WHERE products.product_id = %s",(product_id))
-  product = cur.fetchall()
-  cur.close()
-  return render_template('product.html',products = product)
+  if "username" in session:
+    cur = con.cursor(cursor_factory=RealDictCursor)
+    cur.execute("Select *  from products inner join product_images on products.product_id = product_images.product_id WHERE products.product_id = %s",(product_id))
+    product = cur.fetchall()
+    cur.close()
+    return render_template('product.html',products = product)
+  else:
+    return "<script>alert('Log-In First');window.location.href='/login';</script>"
 
 @app.route("/shopping-cart")
 def shopingCart():
@@ -180,7 +186,10 @@ def account():
 
 @app.route("/myaccount")
 def myaccount():
-  return render_template('myaccount.html')
+  if "username" in session:
+    return render_template('myaccount.html')
+  else:
+    return "<script>alert('Log-In First');window.location.href='/login';</script>"
 
 @app.route("/checkout")
 def checkout():
