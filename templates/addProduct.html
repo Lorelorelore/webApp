@@ -75,8 +75,8 @@
                             <div class="advanced-search">
                                     <select class="category-btn" id="inputGroupSelect04">
                                       <option selected>Choose...</option>
-                                      <option value="1">Men's Wear</option>
-                                      <option value="2">Women’s Wear</option>
+                                      <option value="1">Men's</option>
+                                      <option value="2">Women’s</option>
                                     </select>
                                 <div class="input-group">
                                     <input type="text" placeholder="What do you need?">
@@ -163,6 +163,67 @@
             </div>
         </header>
         <!-- Header End -->
+
+        <div class="register-login-section spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3">
+                        <div class="register-form">
+                            <h2>Add a Product</h2>
+                            <form action="/sell" method="POST" enctype = "multipart/form-data">
+                                <div class="group-input">
+                                    <label for="prodName">Product Name *</label>
+                                    <input type="text" id="prodName" name="prodName" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="description">Description *</label>
+                                    <textarea style="width: 100%;" name = "description" type = "text" row = "50" col = "50" maxlength = "140" ></textarea>
+                                </div>
+                                <div class="group-input">
+                                    <label for="price">Price *</label>
+                                    <input type="number" id="price" name="price" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="sku">SKU (Stock Keeping Unit) *</label>
+                                    <input type="text" id="sku" name="sku" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="stock">Stock *</label>
+                                    <input type="number" id="stock" name="stock" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="variation">Variation *</label>
+                                    <input type="text" id="variation" name="variation" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="brand">Brand *</label>
+                                    <input type="text" id="brand" name="brand" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="category">Category *</label>
+                                    <select name = "category" id="category" required>
+                  
+                                        <option value = 1>MensWear</option>
+                                        <option value = 2>WomensWear</option>
+                                        
+                                      </select>
+                                </div>
+
+                                <div class ="group-input">
+                                    <label for="pImage">Product Image *</label>
+                                    <input type="file" name="pImage" id="uploadfile" >		
+                                </div>
+
+                                <button type="submit" class="site-btn register-btn">REGISTER</button>
+                            </form>
+                            <div class="switch-login">
+                                <a href="./login.html" class="or-login">Or Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
    <!-- Footer Section Begin -->
    <footer class="footer-section">

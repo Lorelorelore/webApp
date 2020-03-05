@@ -60,7 +60,7 @@ def sell():
       image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     else:
       return "<script>alert('Invalid file extension!');window.location.href='addProduct.html';</script>"
-    url = UPLOAD_FOLDER + "/" + image.filename
+    url = "img/" + image.filename
     cur = con.cursor()
     cur.execute("INSERT INTO products (name,description,price,sku,stock,variation,brand,category_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(prodName,description,price,sku,stock,variation,
     brand,category))
