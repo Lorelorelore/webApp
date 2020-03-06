@@ -204,7 +204,7 @@ def search():
     category = request.form['category']
     search = request.form['search']
     cur = con.cursor(cursor_factory=RealDictCursor)
-    cur.execute("Select *  from products inner join product_images on products.product_id = product_images.product_id WHERE products.category_id = %s OR products.name = %s",(category,search))
+    cur.execute("Select *  from products inner join product_images on products.product_id = product_images.product_id WHERE products.category_id = "+category+" AND products.name like '%"+search+"%'")
     products = cur.fetchall()
     return render_template('shop.html', products=products, category=category)
 
